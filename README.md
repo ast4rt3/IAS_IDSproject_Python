@@ -1,6 +1,12 @@
 # Process Manager 🚀  
 A simple Python-based process manager with a watchlist feature.  
-by:  Lawrence Heras
+by: *Lawrence Heras*
+
+##
+🤷‍♂️ For now program must run on the administrator terminal and not the application itself cuz its not a application yet 🤷‍♂️
+      
+
+
 ## Features  
 - 🔍 **Search** for running processes  
 - ❌ **Kill** selected processes  
