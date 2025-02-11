@@ -22,7 +22,7 @@ pip install psutil
 pip install plyer  
 pip install tk  
 ```
-##to do
+## to do
 
 - add data even if the program closes
 	// probably ibutang sa database idk
@@ -40,7 +40,7 @@ pip install tk
 
 
 
-##program aim
+## program aim
 
 
 * to repel any malware, virus or any malicious processes that is running on your computer
