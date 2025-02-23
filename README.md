@@ -20,7 +20,9 @@ Run the following commands to install dependencies:
 
 pip install psutil  
 pip install plyer  
-pip install tk  
+pip install tk
+pip install ttkbootstrap
+ 
 ```
 ## to do
 
