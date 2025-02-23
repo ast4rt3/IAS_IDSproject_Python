@@ -142,6 +142,23 @@ def add_custom_process():
         update_watchlist_table()
         messagebox.showinfo("Watchlist", f"{process_name} has been added to the watchlist.")
 
+# Remove process from watchlist
+def remove_from_watchlist():
+    selected_process = watchlist_listbox.get(tk.ACTIVE)
+    if selected_process:
+        if selected_process in watchlist:
+            watchlist.remove(selected_process)
+            save_watchlist()
+            update_watchlist_table()
+            messagebox.showinfo("Watchlist", f"{selected_process} has been removed from the watchlist.")
+        else:
+            messagebox.showwarning("Watchlist", "Process not found in the watchlist.")
+    else:
+        messagebox.showwarning("Selection Error", "Please select a process from the watchlist.")
+
+
+
+
 # Run as admin and login
 run_as_admin()
 user_login()
@@ -168,6 +185,8 @@ root.geometry(f"{window_width}x{window_height}+{x}+{y}")
 
 root.resizable(False, False)
 
+
+
 # Widgets with themed styling
 ttk.Label(root, text="Search Process:", bootstyle="light").pack()
 search_entry = ttk.Entry(root, bootstyle="dark")
@@ -181,8 +200,10 @@ update_process_list()
 
 ttk.Button(root, text="Kill Process", bootstyle="danger", command=kill_process).pack(pady=5)
 ttk.Button(root, text="Add to Watchlist", bootstyle="success", command=add_to_watchlist).pack(pady=5)
+ttk.Button(root, text="Remove from Watchlist", bootstyle="danger", command=remove_from_watchlist).pack(pady=5)
 ttk.Button(root, text="Add Custom Process", bootstyle="info", command=add_custom_process).pack(pady=5)
 ttk.Button(root, text="Refresh List", bootstyle="secondary", command=update_process_list).pack(pady=5)
+
 
 ttk.Label(root, text="Watchlist:", bootstyle="light").pack()
 watchlist_listbox = tk.Listbox(root, width=50, height=5, bg="#282c34", fg="white")
