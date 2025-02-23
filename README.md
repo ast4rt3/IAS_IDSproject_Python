@@ -22,6 +22,8 @@ pip install psutil
 pip install plyer  
 pip install tk
 pip install ttkbootstrap
+pip install pystray pillow
+
  
 ```
 ## to do
