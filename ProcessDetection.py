@@ -8,10 +8,14 @@ import os
 import sys
 import json
 import ctypes
+import ttkbootstrap as ttk 
+import pystray
+from pystray import MenuItem as item
+from PIL import Image
 
 # Constants
 WATCHLIST_FILE = "watchlist.json"
-MALICIOUS_PROCESSES = {"trojan.exe", "malware.exe", "keylogger.exe", "ransomware.exe"}
+MALICIOUS_PROCESSES = {"trojan.exe", "malware.exe", "keylogger.exe", "ransomware.exe", "Spotify.exe"}
 
 # Ensure script runs as admin
 def is_admin():
@@ -39,11 +43,40 @@ def save_watchlist():
 
 # User login function
 def user_login():
-    username = simpledialog.askstring("Login", "Enter username:")
-    password = simpledialog.askstring("Login", "Enter password:", show="*")
-    if username != "admin" or password != "password":
-        messagebox.showerror("Login Failed", "Invalid credentials. Exiting...")
-        sys.exit()
+    login_window = tk.Tk()
+    login_window.title("Login")
+    login_window.geometry("300x150")
+    login_window.resizable(False, False)
+    
+    # Center window on screen
+    login_window.update_idletasks()
+    screen_width = login_window.winfo_screenwidth()
+    screen_height = login_window.winfo_screenheight()
+    x = (screen_width - 300) // 2
+    y = (screen_height - 150) // 2
+    login_window.geometry(f"300x150+{x}+{y}")
+
+    tk.Label(login_window, text="Username:").pack()
+    username_entry = tk.Entry(login_window)
+    username_entry.pack()
+
+    tk.Label(login_window, text="Password:").pack()
+    password_entry = tk.Entry(login_window, show="*")
+    password_entry.pack()
+
+    def check_credentials():
+        username = username_entry.get()
+        password = password_entry.get()
+        if username != "admin" or password != " ":
+            messagebox.showerror("Login Failed", "Invalid credentials. Exiting...")
+            sys.exit()
+        login_window.destroy()
+
+    tk.Button(login_window, text="Login", command=check_credentials).pack(pady=5)
+
+    login_window.protocol("WM_DELETE_WINDOW", lambda: sys.exit())  # Prevent bypassing login
+    login_window.mainloop()
+
 
 # Get list of running processes
 def get_running_processes():
@@ -87,7 +120,7 @@ def watchlist_monitor():
         for process in watchlist:
             if process in running_processes:
                 notification.notify(title="Watchlist Alert", message=f"{process} is running.", timeout=5)
-        time.sleep(5)
+        time.sleep(60)
 
 # Add process to watchlist
 def add_to_watchlist():
@@ -121,27 +154,38 @@ watchlist_thread = threading.Thread(target=watchlist_monitor, daemon=True)
 watchlist_thread.start()
 
 # UI Setup
-root = tk.Tk()
+root = ttk.Window(themename="solar")
 root.title("Process Manager")
-root.geometry("500x500")
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+window_width = 500
+window_height = 1000
 
-tk.Label(root, text="Search Process:").pack()
-search_entry = tk.Entry(root)
+x = 1910 - window_width  
+y = (1000 - window_height)    
+
+root.geometry(f"{window_width}x{window_height}+{x}+{y}")
+
+root.resizable(False, False)
+
+# Widgets with themed styling
+ttk.Label(root, text="Search Process:", bootstyle="light").pack()
+search_entry = ttk.Entry(root, bootstyle="dark")
 search_entry.pack()
-tk.Button(root, text="Search", command=lambda: update_process_list(search_entry.get())).pack(pady=5)
+ttk.Button(root, text="Search", bootstyle="primary", command=lambda: update_process_list(search_entry.get())).pack(pady=5)
 
-tk.Label(root, text="Running Processes:").pack()
-process_listbox = tk.Listbox(root, width=50, height=10)
+ttk.Label(root, text="Running Processes:", bootstyle="light").pack()
+process_listbox = tk.Listbox(root, width=50, height=10, bg="#282c34", fg="white")
 process_listbox.pack()
 update_process_list()
 
-tk.Button(root, text="Kill Process", command=kill_process).pack(pady=5)
-tk.Button(root, text="Add to Watchlist", command=add_to_watchlist).pack(pady=5)
-tk.Button(root, text="Add Custom Process", command=add_custom_process).pack(pady=5)
-tk.Button(root, text="Refresh List", command=update_process_list).pack(pady=5)
+ttk.Button(root, text="Kill Process", bootstyle="danger", command=kill_process).pack(pady=5)
+ttk.Button(root, text="Add to Watchlist", bootstyle="success", command=add_to_watchlist).pack(pady=5)
+ttk.Button(root, text="Add Custom Process", bootstyle="info", command=add_custom_process).pack(pady=5)
+ttk.Button(root, text="Refresh List", bootstyle="secondary", command=update_process_list).pack(pady=5)
 
-tk.Label(root, text="Watchlist:").pack()
-watchlist_listbox = tk.Listbox(root, width=50, height=5)
+ttk.Label(root, text="Watchlist:", bootstyle="light").pack()
+watchlist_listbox = tk.Listbox(root, width=50, height=5, bg="#282c34", fg="white")
 watchlist_listbox.pack()
 update_watchlist_table()
 
