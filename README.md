@@ -20,9 +20,13 @@ Run the following commands to install dependencies:
 
 pip install psutil  
 pip install plyer  
-pip install tk
-pip install ttkbootstrap
-pip install pystray pillow
+pip install tk  
+pip install ttkbootstrap  
+pip install pystray pillow  
+pip install supabase  
+pip install pyotp  
+pip install qrcode
+
 
  
 ```
