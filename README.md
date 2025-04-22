@@ -17,7 +17,6 @@ for now the working features are
 Run the following commands to install dependencies:  
 
 ```sh
-
 pip install psutil  
 pip install plyer  
 pip install tk  
@@ -26,9 +25,6 @@ pip install pystray pillow
 pip install supabase  
 pip install pyotp  
 pip install qrcode
-
-
- 
 ```
 ## to do
 
