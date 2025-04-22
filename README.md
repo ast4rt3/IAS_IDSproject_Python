@@ -8,6 +8,7 @@ for now the working features are
 
 ****VVVVVVVVVVVVVV****
 ## Features  
+Authentication and verification via qr code authenticator
 - 🔍 **Search** for running processes  
 - ❌ **Kill** selected processes  
 - 🚫 **Blocklist** processes  
